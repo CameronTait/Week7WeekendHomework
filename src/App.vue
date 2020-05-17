@@ -1,28 +1,36 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+  <div>
+    <h1>Characters</h1>
+    <character-filter-form :characters="characters" />
+    <character-detail />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import CharacterFilterForm from './components/CharacterFilterForm.vue'
+import CharacterDetail from './components/CharacterDetail.vue'
 export default {
-  name: 'App',
+  data(){
+    return {
+      characters: [],
+    }
+  },
   components: {
-    HelloWorld
+    "character-filter-form": CharacterFilterForm,
+    "character-detail": CharacterDetail
+  },
+  mounted(){
+    fetch('https://breakingbadapi.com/api/characters')
+    .then(res => res.json())
+    .then(characters => this.characters = characters)
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style lang="css" scoped>
+h1 {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: red;
 }
+
 </style>
